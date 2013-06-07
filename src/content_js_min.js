@@ -201,6 +201,9 @@
                 this.g.innerHTML = "More »";
                 b.attribution && ("translation" == b.type ? (this.o.innerHTML =
                         b.attribution, this.k.className = "gdx-display-none", this.o.className = "gdx-display-inline") : (this.s.innerHTML = b.attribution, b = this.s.getElementsByTagName("a")[0], this.k.href = b.href, this.k.innerHTML = b.innerHTML.replace("http://", ""), this.k.className = "gdx-display-inline", this.o.className = "gdx-display-none"), this.d.className = "gdx-display-block")
+                if (b.srcLang == "en") {
+                    this.o.className = "gdx-display-none";
+                }
             }
             else this.b.className = "gdx-display-none", this.h.innerHTML = "No definition found.", this.g.href = "http://www.google.com/search?q=" + encodeURIComponent(a.sanitizedQuery),
             this.g.innerHTML = 'Search »';

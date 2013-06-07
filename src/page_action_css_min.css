@@ -21,9 +21,13 @@ p {
     margin: 0px 0px 3px 0px;
 }
 
+input {
+    font-family: 'Microsoft YaHei','Segoe UI',sans-serif;
+}
+
 input[type=button] {
     background-color: #58d;
-    color: rgba(255,255,255,0.9); font-family: 'Microsoft YaHei','Segoe UI',sans-serif; font-weight: normal;
+    color: rgba(255,255,255,0.9); font-weight: normal;
     padding: 2px 0px; line-height: 20px;
     border: solid 2px #58d;
     cursor: pointer;
@@ -82,12 +86,12 @@ input[type=button]:enabled:hover {
 }
 
 #lookup-status {
-    margin-left: 5px;
+    margin-left: 2px;
 }
 
 #web-search-link {
     font-size: 12px;
-    margin-left: 5px;
+    margin-left: 2px;
     margin-top: 6px;
 }
 
@@ -99,7 +103,7 @@ input[type=button]:enabled:hover {
     max-height: 300px;
     overflow-x: hidden;
     overflow-y: visible;
-    padding: 4px;
+    padding: 4px 4px 8px 4px;
     text-overflow: ellipsis;
 }
 
@@ -134,7 +138,7 @@ input[type=button]:enabled:hover {
     font-size: 14px; line-height: 30px;
     font-weight: normal;
     color: #fff;
-    margin: 10px 0px 5px 0px;
+    margin: 10px 0px;
     padding: 0px 10px;
 }
 
@@ -175,16 +179,47 @@ input[type=button]:enabled:hover {
     color: #999;
 }
 
-#meaning > ol,
-#meaning > ul {
-    padding-left: 35px;
+#meaning > ol {
+    padding-left: 30px; padding-right: 10px;
     margin: 5px 0px 10px 5px;
     color: #333;
+}
+
+#meaning > ol a {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 #meaning .translate-main {
     font-size: 18px; line-height: 24px;
     padding: 5px 5px 0px 5px;
+}
+
+#meaning .translate-phonetic {
+    float: left;
+    line-height: 24px;
+    padding-left: 5px;
+    color: #999; font-family: Arial;
+}
+
+#meaning .translate-audio {
+    float: left;
+    padding-left: 0px;
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAgMAAABinRfyAAAAA3NCSVQICAjb4U/gAAAADFBMVEX////MzMyZmZlmZmZ90EaMAAAABHRSTlMA////sy1AiAAAAAlwSFlzAAAK6wAACusBgosNWgAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTNui8sowAAAArSURBVAiZY2BAA+wHgIT8gQsMDPVnFzDw/z9eAiQOm8AIIBcsAVECVowCALBMEWET6juKAAAAAElFTkSuQmCC');
+    background-position: center center;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    width: 16px;
+    height: 20px;
+    margin-top: 2px; margin-left: 2px;
+    transition: opacity linear 0.2s;
+    opacity: 0.5;
+}
+
+#meaning .translate-audio:hover {
+    opacity: 1;
 }
 
 #meaning .translate-attrib {
@@ -202,5 +237,5 @@ input[type=button]:enabled:hover {
 }
 
 #meaning > br {
-    display: none;
+    display: block;
 }

@@ -1,6 +1,10 @@
 /* Copyright 2011 Google Inc. All Rights Reserved. */
 (function () {
 
+    window.onerror = function (e) {
+        alert(e);
+    };
+
     //var timer = setInterval(function () {
     //    try {
     //        google.language.define("advantages", "en", "en", function (a) {
@@ -44,7 +48,8 @@
             })
         }, G = function (a, c, b) {
             if (!("fetch_raw" != a.type && "fetch_html" != a.type)) {
-                _gaq && _gaq.push(["_trackEvent", "lookup", a.type]); -1 != x && y != a.instanceId && chrome.tabs.sendMessage(x, {
+                //_gaq && _gaq.push(["_trackEvent", "lookup", a.type]);
+                -1 != x && y != a.instanceId && chrome.tabs.sendMessage(x, {
                     type: "hide",
                     instanceId: y
                 });
@@ -127,7 +132,6 @@
                 var e = I(b.translateResponse, h);
 
                 var preMT = "";
-
                 if (d) {
                     if (d.phonetic) {
                         preMT += '<span class="gdx-bubble-phonetic">' + d.phonetic + "</span>";
@@ -138,7 +142,7 @@
                 }
 
                 if (e) {
-                    e.meaningText = preMT + e.meaningText;
+                    //e.meaningText = preMT + e.meaningText;
                     if ("en" != t.language && d) {
                         e.meaningText += d.meaningText;
                     }
@@ -147,51 +151,193 @@
                 a = null;
                 if (b.translateResponse && b.translateResponse.ld_result && (a = b.translateResponse.ld_result.srclangs))
                     for (var f = 0, l = a.length; f < l; f++) a[f] = a[f].toLowerCase();
-                l = true;
-                //if (!c || "licensedDef" != c.type) {
-                //    //alert("here");
 
-                //    var f = t.language.toLowerCase(),
-                //        g = e && e.srcLang.toLowerCase() != f;
-                //    if (g && a && !A(a, f) || !c && g)
-                //        l = true;
-                //    //alert([g, a, !A(a, f), c, g]);
+                //if ("fetch_html" == b.request.type) {
+                //    l = false;
+                //    if (!c || "licensedDef" != c.type) {
+                //        //alert("here");
+
+                //        var f = t.language.toLowerCase(),
+                //            g = e && e.srcLang.toLowerCase() != f;
+                //        if (g && a && !A(a, f) || !c && g)
+                //            l = true;
+                //        //alert([g, a, !A(a, f), c, g]);
+                //    }
                 //}
-                a = l ? "translation" : "definition";
+                //else {
+                //    l = true;
+                //}
+
+                var query = d && d.prettyQuery || b.sanitizedQuery;
+
                 !c && !e && (a = "none");
-                _gaq && _gaq.push(["_trackEvent", "lookup", "type_" + a]);
+                //_gaq && _gaq.push(["_trackEvent", "lookup", "type_" + a]);
+
                 a = "http://translate.google.com/translate_t?source=dict-chrome-ex&sl=auto&tl=" + t.language + "&q=" + encodeURIComponent(b.sanitizedQuery);
                 f = "http://www.google.com/search?source=dict-chrome-ex&defl=" + t.language + "&hl=" + t.language + "&q=" + encodeURIComponent(b.sanitizedQuery) + "&tbo=1&tbs=dfn:1";
+
+                var dObj = d;
+
                 if ("fetch_html" == b.request.type) {
-                    if (l)
-                        if (c = b.translateResponse, d = I(c, m)) {
-                            d = '<div class="translate-main">' + d.meaningText + '</div><div class="translate-attrib">(' + d.attribution + ")</div>";
-                            e = "";
-                            if (c.dict && 0 < c.dict.length) {
-                                e = '<h3 class="dct-tl">Translated definitions</h3>';
-                                f = 0;
-                                for (l = c.dict.length; f < l; f++) {
-                                    for (var g = c.dict[f], e = e + ("<b>" + g.pos + "</b><ol>"),
-                                            p = 0, r = g.terms.length; p < r; p++) {
-                                        var u = g.terms[p];
-                                        0 < u.length && (e += "<li>" + u + "</li>")
+                    //if (true)
+                    c = b.translateResponse;
+                    d = I(c, m);
+
+                    var limit = 10;
+
+                    e = "";
+                    if (c.dict && 0 < c.dict.length) {
+                        e = '<h3 class="dct-tl">Translated Definitions</h3>';
+                        f = 0;
+                        for (l = c.dict.length; f < l; f++) {
+                            for (var g = c.dict[f], e = e + (g.pos ? "<b>" + g.pos + "</b>" : "") + "<ol>",
+                                    p = 0, r = g.terms.length; p < r && p < limit; p++) {
+                                var u = g.terms[p];
+                                0 < u.length && (e += "<li>" + u + "</li>")
+                            }
+                            e += "</ol>"
+                        }
+                    }
+
+
+                    var dR = b.enDictResponse;
+
+                    if (!dR.primaries && !dR.webDefinitions) {
+                        dR = b.dictResponse;
+                    }
+
+                    var html = getDefinitionHtml("primaries", limit);
+                    var webHtml = getDefinitionHtml("webDefinitions", limit);
+
+                    function getDefinitionHtml(type, limit) {
+                        if (arguments.length < 2) {
+                            limit = Infinity;
+                        }
+
+                        var html = "";
+
+                        if (!dR || !dR[type]) {
+                            return html;
+                        }
+                        //
+
+                        var meanings = [];
+
+                        for (var c = 0, b; b = dR[type][c]; c++) {
+
+                            //var phonetic;
+                            //if (phonetic = J(b.terms, "phonetic")) {
+                            //    meaningText += '<span class="gdx-phonetic">' + phonetic + "</span>";
+                            //}
+
+                            var meaningHtml = "";
+
+                            var count = limit;
+
+                            for (var d = 0, e; e = b.entries[d]; d++) {
+                                if (e.terms && 0 < e.terms.length && "meaning" == e.type) {
+                                    var f = J(e.terms, "text");
+                                    if (f) {
+                                        meaningHtml += "<li>" + f + J(e.terms, "url") + "</li>";
+                                        count--;
+
+                                        if (count <= 0) {
+                                            break;
+                                        }
                                     }
-                                    e += "</ol>"
                                 }
                             }
-                            a = d + e + ('<br><div class="translate-powered">Powered by <a href="' + a + '" class="translate-link">Google Translate</a></div><br>')
+
+                            if (!meaningHtml) {
+                                continue;
+                            }
+
+                            var pos = "";
+                            for (var i = 0; i < b.terms.length; i++) {
+                                var term = b.terms[i];
+                                if (term.type == "text") {
+                                    if (term.labels) {
+                                        for (var j = 0; j < term.labels.length; j++) {
+                                            var label = term.labels[j];
+                                            if (label.title == "Part-of-speech") {
+                                                //meaningText += '<span class="gdx-part-of-speech">' + label.text.toLowerCase() + "</span>";
+                                                var pos = label.text.toLowerCase();
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    break;
+                                }
+                            }
+
+                            meanings.push({
+                                pos: pos,
+                                html: meaningHtml
+                            });
                         }
-                        else a = "";
-                    else if (a = b.dictResponse, !a || a.error) a = "";
-                    else {
-                        c = google.language.dictionary.createResultHtml(a);
-                        a = document.createElement("div");
-                        a.innerHTML = c;
-                        c = a.getElementsByTagName("a");
-                        for (d = c.length - 1; 0 <= d; d--) e = c[d], "Google Dictionary" == e.innerText && 0 == e.href.lastIndexOf("http://www.google.com/dictionary",
-                            0) && (e.href = f);
-                        a = a.innerHTML
+
+                        meanings.sort(function (a, b) {
+                            return a.pos > b.pos ? 1 : a.pos < b.pos ? -1 : 0;
+                        });
+
+                        //for (var i = 1; i < meanings.length; i++) {
+                        //    if (meanings[i - 1].pos == meanings[i].pos) {
+                        //        meanings[i - 1].html += meanings[i].html;
+                        //        meanings.splice(i, 1);
+                        //    }
+                        //}
+
+                        for (var i = 0; i < meanings.length; i++) {
+                            var posHtml = meanings[i].pos || (i > 0 ? "other" : "");
+                            html +=
+                                (posHtml ? '<b>' + posHtml + '</b>' : "") +
+                                '<ol>' +
+                                    meanings[i].html +
+                                "</ol>";
+                        }
+
+                        return html;
                     }
+
+                    var noDf = !(html || webHtml || e);
+
+                    d = (noDf ? (
+                        d ?
+                        '<div class="translate-main">' + d.meaningText + '</div>' :
+                        ""
+                    ) : (
+                        '<div class="translate-main">' + query + '</div>' +
+                        (dObj ?
+                        '<span class="translate-phonetic">' + (dObj.phonetic || "") + '</span>' +
+                        (dObj.phonetic && dObj.audio ? '<span class="translate-audio" data-audio="' + dObj.audio + '"></span>' : "") :
+                        "") +
+                        '<div style="clear: both;"></div>'
+                    )) +
+                        (d && noDf ? '<div class="translate-attrib">' + d.attribution + "</div>" : "");
+
+                    if (!d) {
+                        a = "";
+                    }
+                    else {
+                        if (html) {
+                            e += '<h3 class="dct-tl">Definitions</h3>' + html;
+                        }
+                        if (webHtml) {
+                            e += '<h3 class="dct-tl">Web Definitions</h3>' + webHtml;
+                        }
+
+                        a = d + e;
+                    }
+                    //else if (a = b.dictResponse, !a || a.error) a = "";
+                    //else {
+                    //    c = google.language.dictionary.createResultHtml(a);
+                    //    a = document.createElement("div");
+                    //    a.innerHTML = c;
+                    //    c = a.getElementsByTagName("a");
+                    //    for (d = c.length - 1; 0 <= d; d--) e = c[d], "Google Dictionary" == e.innerText && 0 == e.href.lastIndexOf("http://www.google.com/dictionary",
+                    //        0) && (e.href = f);
+                    //    a = a.innerHTML
+                    //}
                     a = {
                         eventKey: b.request.eventKey,
                         sanitizedQuery: b.sanitizedQuery,
@@ -200,8 +346,15 @@
                 }
                 else {
                     g = k;
-                    l && e ? (g = e, g.moreUrl = a, d && (d.audio && "en" == e.srcLang.toLowerCase()) && (g.audio = d.audio)) : c && (g = c, g.moreUrl = f);
-                    g && !g.prettyQuery && (g.prettyQuery = d && d.prettyQuery || b.sanitizedQuery);
+                    e ? (g = e, g.moreUrl = a, d && (d.audio && "en" == e.srcLang.toLowerCase()) && (g.audio = d.audio)) : c && (g = c, g.moreUrl = f);
+
+                    if (g) {
+                        if (!g.prettyQuery) {
+                            g.prettyQuery = query;
+                        }
+                        g.meaningText = preMT + g.meaningText;
+                    }
+
                     a = m;
                     if (("true" == t.popupDblclick && "none" == t.popupDblclickKey || "true" == t.popupSelect && "none" == t.popupSelectKey) && A(s, b.sanitizedQuery)) a = h;
                     a = {
