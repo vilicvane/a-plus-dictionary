@@ -1,0 +1,137 @@
+/* Copyright 2013 Google Inc. All Rights Reserved. */
+body {
+    background-color: #f9f9f9;
+    color: #000;
+    font-family: 'Microsoft YaHei','Segoe UI',sans-serif;
+    font-size: 13px;
+}
+
+a {
+    color: #58d;
+    text-decoration: none;
+}
+
+input, select {
+    outline: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+button {
+    background-color: #58d;
+    padding: 4px 20px;
+    color: rgba(255,255,255,0.9); font-weight: bold; font-family: 'Microsoft YaHei','Segoe UI',sans-serif; font-weight: normal;
+    border: solid 2px #58d;
+    cursor: pointer;
+    transition: all linear 0.2s;
+    outline: none;
+}
+
+button:disabled {
+    background-color: #eee;
+    border-color: #eee;
+    color: #aaa;
+    cursor: default;
+}
+
+button:enabled:hover {
+    background-color: #47b;
+    color: #fff;
+}
+
+#content {
+    background-color: #fff;
+    border-color: #eee;
+    border-style: solid;
+    border-width: 4px;
+    margin: 40px auto 0;
+    padding: 12px;
+    width: 600px;
+}
+
+#title {
+    color: #999;
+    font-size: 20px;
+    line-height: 40px;
+    height: 80px;
+    margin: 20px 0 0;
+    padding-left: 40px;
+    text-transform: uppercase;
+}
+
+#title > img {
+    position: absolute;
+}
+
+#title div {
+    float: right;
+    margin: 10px 45px 0px 0px;
+}
+
+.option_row {
+    clear: left;
+    padding: 20px 50px 0px 50px;
+}
+
+.about_plus {
+    clear: left;
+    font-size: 12px; color: #999;
+    padding: 10px 50px 20px 50px;
+}
+
+.option_name {
+    float: left;
+    color: #999;
+    margin-top: 2px;
+    width: 105px;
+    
+}
+
+.option_value {
+    float: left;
+    color: #333;
+}
+
+.option_value_primary input[type=checkbox] {
+    position: relative;
+    top: 1px; left: -2px;
+}
+
+.option_value_secondary {
+    margin: 5px 5px 20px 25px;
+    color: #999;
+}
+
+.text_disabled {
+    color: #999;
+}
+
+.buttons {
+    clear: left;
+    text-align: center;
+    padding: 10px;
+}
+
+#save_status {
+    position: absolute;
+    left: 50%; top: 0px;
+    width: 120px;
+    margin: 0px -60px;
+    background-color: #5a0;
+    opacity: 0;
+    padding: 8px 0px;
+    text-align: center; color: #fff; font-weight: bold;
+    border-radius: 0px 0px 5px 5px;
+}
+
+.footer {
+    margin-top: 10px;
+    text-align: center;
+    color: #ccc;
+}
+
+.footer a {
+    color: #999;
+}

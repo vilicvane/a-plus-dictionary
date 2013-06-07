@@ -1,0 +1,206 @@
+/* Copyright 2013 Google Inc. All Rights Reserved. */
+body {
+    color: black;
+    font-family: 'Microsoft Yahei','Segoe UI',sans-serif;
+    font-size: 14px;
+    margin: 0;
+    padding: 10px 15px;
+    width: 350px;
+}
+
+a {
+    color: #58d;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+p {
+    margin: 0px 0px 3px 0px;
+}
+
+input[type=button] {
+    background-color: #58d;
+    color: rgba(255,255,255,0.9); font-family: 'Microsoft YaHei','Segoe UI',sans-serif; font-weight: normal;
+    padding: 2px 0px; line-height: 20px;
+    border: solid 2px #58d;
+    cursor: pointer;
+    transition: linear 0.2s;
+    transition-property: background-color, color, border-color;
+    outline: none;
+}
+
+input[type=button]:disabled {
+    background-color: #eee;
+    border-color: #eee;
+    color: #aaa;
+    cursor: default;
+}
+
+input[type=button]:enabled:hover {
+    background-color: #47b;
+    color: #fff;
+}
+
+#query-field {
+    position: absolute;
+    left: 0px;
+    width: 240px;
+    line-height: 18px; padding: 4px;
+    border: solid 1px #eee;
+    outline: none;
+    transition: border-color linear 0.2s;
+    font-size: 14px; color: #333;
+}
+
+#query-field:focus {
+    border-color: #ccc;
+}
+
+#button {
+    position: absolute;
+    right: 0px;
+    width: 80px;
+}
+
+#extra-padding {
+    padding: 6px;
+}
+
+#lookup-form {
+    position: relative;
+    height: 32px;
+}
+
+#lookup-status,
+#usage-tip {
+    color: #999;
+    font-size: 12px;
+    margin-top: 12px;
+}
+
+#lookup-status {
+    margin-left: 5px;
+}
+
+#web-search-link {
+    font-size: 12px;
+    margin-left: 5px;
+    margin-top: 6px;
+}
+
+
+#meaning {
+    border: 1px solid #ccc;
+    font-size: 12px;
+    margin-top: 6px;
+    max-height: 300px;
+    overflow-x: hidden;
+    overflow-y: visible;
+    padding: 4px;
+    text-overflow: ellipsis;
+}
+
+.footer {
+    color: #666;
+    font-size: 11px;
+    margin-top: 12px;
+    text-align: center;
+}
+
+#meaning .dct-tt {
+    font-size: 13px;
+    font-weight: bold;
+}
+
+#meaning .dct-tlb {
+    border-left: dotted 1px #bbb;
+    color: #666;
+    display: inline;
+    font-size: 10px;
+    font-weight: normal;
+    padding-left: 6px;
+    white-space: nowrap;
+}
+
+#meaning .dct-tp {
+    font-size: 12px;
+}
+
+#meaning .dct-tl {
+    background: #58d;
+    font-size: 14px; line-height: 30px;
+    font-weight: normal;
+    color: #fff;
+    margin: 10px 0px 5px 0px;
+    padding: 0px 10px;
+}
+
+#meaning .dct-em {
+    font-weight: bold;
+}
+
+#meaning .dct-elb {
+    color: #666;
+    font-size: 10px;
+    white-space: nowrap;
+}
+
+#meaning .dct-rlnk, #meaning .dct-lnk {
+    color: #11c;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+#meaning .dct-rlnk:hover, #meaning .dct-lnk:hover {
+    text-decoration: underline;
+}
+
+#meaning .dct-img {
+    border: 0;
+}
+
+#meaning .dct-snp {
+    color: #666;
+}
+
+#meaning > * {
+    padding-left: 10px;
+}
+
+#meaning > b {
+    font-weight: normal;
+    color: #999;
+}
+
+#meaning > ol,
+#meaning > ul {
+    padding-left: 35px;
+    margin: 5px 0px 10px 5px;
+    color: #333;
+}
+
+#meaning .translate-main {
+    font-size: 18px; line-height: 24px;
+    padding: 5px 5px 0px 5px;
+}
+
+#meaning .translate-attrib {
+    color: #999;
+    padding-left: 0px;
+    margin-left: 5px;
+    font-size: 12px;
+}
+
+#meaning .translate-powered {
+    color: #999;
+    font-size: 12px;
+    margin: 10px 0px;
+    padding-left: 5px;
+}
+
+#meaning > br {
+    display: none;
+}

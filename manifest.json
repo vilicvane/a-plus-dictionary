@@ -1,0 +1,30 @@
+{
+   "background": {
+      "page": "background.html",
+      "persistent": false
+   },
+   "browser_action": {
+      "default_icon": "static/icon19.png",
+      "default_popup": "page_action.html",
+      "default_title": "Google Dictionary Plus"
+   },
+   "content_scripts": [ {
+      "all_frames": true,
+      "css": [ "content_css_min.css" ],
+      "js": [ "content_js_min.js" ],
+      "matches": [ "<all_urls>" ]
+   } ],
+   "content_security_policy": "script-src 'self' https://ssl.google-analytics.com https://clients5.google.com; object-src 'self'",
+   "description": "View definitions easily as you browse the web. Based on Google Dictionary by Google.",
+   "icons": {
+      "128": "static/icon128.png",
+      "16": "static/icon16.png",
+      "32": "static/icon32.png",
+      "48": "static/icon48.png"
+   },
+   "manifest_version": 2,
+   "name": "Google Dictionary Plus",
+   "options_page": "options.html",
+   "permissions": [ "tabs", "https://clients5.google.com/*" ],
+   "version": "0.1.0"
+}
