@@ -1,22 +1,5 @@
 /* Copyright 2011 Google Inc. All Rights Reserved. */
 (function () {
-
-    window.onerror = function (e) {
-        alert(e);
-    };
-
-    //var timer = setInterval(function () {
-    //    try {
-    //        google.language.define("advantages", "en", "en", function (a) {
-    //            prompt("", JSON.stringify(a));
-    //        });
-    //        clearInterval(timer);
-    //    }
-    //    catch (e) {
-
-    //    }
-    //}, 10);
-
     var h = !0,
         k = null,
         m = !1,
