@@ -114,6 +114,14 @@ input[type=button]:enabled:hover {
     text-align: center;
 }
 
+#meaning > * {
+    padding-left: 10px;
+}
+
+#meaning > p {
+    padding-left: 15px;
+}
+
 #meaning .dct-tt {
     font-size: 13px;
     font-weight: bold;
@@ -168,10 +176,6 @@ input[type=button]:enabled:hover {
 
 #meaning .dct-snp {
     color: #666;
-}
-
-#meaning > * {
-    padding-left: 10px;
 }
 
 #meaning > b {

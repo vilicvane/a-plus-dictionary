@@ -198,15 +198,24 @@
                             e += "</ol>"
                         }
                     }
-
-
-                    var dR = b.enDictResponse;
-
-                    if (!dR.primaries && !dR.webDefinitions) {
-                        dR = b.dictResponse;
+                    else if (d) {
+                        e = '<h3 class="dct-tl">Translated Definitions</h3>' + d.meaningText;
                     }
 
+                    var dR = t.language == "en" ? b.dictResponse : b.enDictResponse;
+
+                    //if (!dR.primaries && !dR.webDefinitions) {
+                    //    dR = b.dictResponse;
+                    //}
+
                     var html = getDefinitionHtml("primaries", limit);
+
+                    dR = b.dictResponse;
+
+                    if (!dR.primaries && !dR.webDefinitions) {
+                        dR = b.enDictResponse;
+                    }
+
                     var webHtml = getDefinitionHtml("webDefinitions", limit);
 
                     function getDefinitionHtml(type, limit) {
