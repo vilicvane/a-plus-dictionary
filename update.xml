@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <gupdate xmlns="http://www.google.com/update2/response" protocol="2.0">
     <app appid="iimcdmbopiogfmmihnhednlicglbclei">
-        <updatecheck codebase="https://raw.github.com/vilic/google-dictionary-plus/master/google-dictionary-plus.crx" version="0.2.10" />
+        <updatecheck codebase="https://raw.github.com/vilic/google-dictionary-plus/master/google-dictionary-plus.crx" version="0.2.11" />
     </app>
 </gupdate>

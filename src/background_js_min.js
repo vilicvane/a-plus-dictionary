@@ -305,7 +305,7 @@
                         "") +
                         '<div style="clear: both;"></div>'
                     )) +
-                        (d && noDf ? '<div class="translate-attrib">' + d.attribution + "</div>" : "");
+                        (d && d.srcLang != "en" ? '<div class="translate-attrib">' + d.attribution + "</div>" : "");
 
                     if (!d) {
                         a = "";
