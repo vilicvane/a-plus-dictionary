@@ -14,7 +14,7 @@
       "js": [ "content_js_min.js" ],
       "matches": [ "<all_urls>" ]
    } ],
-   "content_security_policy": "script-src 'self' https://ssl.google-analytics.com https://clients5.google.com; object-src 'self'",
+   "content_security_policy": "script-src 'self' https://www.google-analytics.com https://clients5.google.com; object-src 'self'",
    "description": "View definitions easily as you browse the web. Based on Google Dictionary by Google.",
    "icons": {
       "128": "static/icon128.png",
@@ -26,6 +26,6 @@
    "name": "Google Dictionary Plus",
    "options_page": "options.html",
    "permissions": [ "tabs", "https://clients5.google.com/*" ],
-   "version": "0.2.9",
+   "version": "0.2.10",
    "update_url": "https://raw.github.com/vilic/google-dictionary-plus/master/update.xml"
 }
