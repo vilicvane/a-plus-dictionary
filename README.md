@@ -3,7 +3,7 @@ Based on Google Dictionary (by Google)
 
 ## Install
 
-View it on [Chrome Web Store](https://chrome.google.com/webstore/detail/a%20-dictionary/nbdnlnijofenjgknplpelkpmhikpangb)
+View it on [Chrome Web Store](https://chrome.google.com/webstore/detail/a%20-dictionary/nbdnlnijofenjgknplpelkpmhikpangb).
 
 ## Why Plus
 
