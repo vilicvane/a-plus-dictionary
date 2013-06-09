@@ -95,6 +95,10 @@
 #gdx-bubble-container #gdx-bubble-meaning {
     font-size: 14px!important;
     color: #666!important;
+    padding-right: 5px!important;
+    margin-right: -5px!important;
+    overflow: auto!important;
+    max-height: 250px!important;
 }
 
 #gdx-bubble-container #gdx-bubble-meaning p:not(:last-child) {

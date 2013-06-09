@@ -26,6 +26,6 @@
    "name": "Google Dictionary Plus",
    "options_page": "options.html",
    "permissions": [ "tabs", "https://clients5.google.com/*" ],
-   "version": "0.2.14",
+   "version": "0.2.15",
    "update_url": "https://raw.github.com/vilic/google-dictionary-plus/master/update.xml"
 }
