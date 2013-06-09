@@ -186,40 +186,40 @@
     D.prototype.L = function (a) {
         var that = this;
         if (a.eventKey == this.m) {
-            this.f();
-            this.l.className = "gdx-display-none";
-            this.e.className = "gdx-display-none";
-            this.i.className = "gdx-display-block";
-            this.d.className = "gdx-display-none";
-            this.c.className = "gdx-status-loaded";
-            if (a.meaningObj) {
-                var b = a.meaningObj;
-                this.b.className = "gdx-display-block";
-                this.q.innerHTML = b.prettyQuery;
-                this.h.innerHTML = b.meaningText;
-                if (b.audio) {
-                    this.p.src = b.audio;
-                    this.l.className = "gdx-display-block";
-
-                    chrome.storage.sync.get("options", function (data) {
-                        if (data.options.autoAudio == "true") {
+            chrome.storage.sync.get("options", function (data) {
+                var options = data.options;
+                that.f();
+                that.l.className = "gdx-display-none";
+                that.e.className = "gdx-display-none";
+                that.i.className = "gdx-display-block";
+                that.d.className = "gdx-display-none";
+                that.c.className = "gdx-status-loaded";
+                if (a.meaningObj) {
+                    var b = a.meaningObj;
+                    that.b.className = "gdx-display-block";
+                    that.q.innerHTML = b.prettyQuery;
+                    that.h.innerHTML = b.meaningText;
+                    if (b.audio) {
+                        that.p.src = b.audio;
+                        that.l.className = "gdx-display-block";
+                        if (options.autoAudio == "true") {
                             that.p.play();
                         }
-                    });
+                    }
+                    that.g.href = b.moreUrl;
+                    that.g.innerHTML = "More »";
+                    b.attribution && ("translation" == b.type ? (that.o.innerHTML =
+                            b.attribution, that.k.className = "gdx-display-none", that.o.className = "gdx-display-inline") : (that.s.innerHTML = b.attribution, b = that.s.getElementsByTagName("a")[0], that.k.href = b.href, that.k.innerHTML = b.innerHTML.replace("http://", ""), that.k.className = "gdx-display-inline", that.o.className = "gdx-display-none"), that.d.className = "gdx-display-block")
+                    if (b.type == "translation" && (b.srcLang == "en" || options.language.substr(0, 2) == b.srcLang.substr(0, 2))) {
+                        that.o.className = "gdx-display-none";
+                    }
                 }
-                this.g.href = b.moreUrl;
-                this.g.innerHTML = "More »";
-                b.attribution && ("translation" == b.type ? (this.o.innerHTML =
-                        b.attribution, this.k.className = "gdx-display-none", this.o.className = "gdx-display-inline") : (this.s.innerHTML = b.attribution, b = this.s.getElementsByTagName("a")[0], this.k.href = b.href, this.k.innerHTML = b.innerHTML.replace("http://", ""), this.k.className = "gdx-display-inline", this.o.className = "gdx-display-none"), this.d.className = "gdx-display-block")
-                if (b.srcLang == "en") {
-                    this.o.className = "gdx-display-none";
-                }
-            }
-            else this.b.className = "gdx-display-none", this.h.innerHTML = "No definition found.", this.g.href = "http://www.google.com/search?q=" + encodeURIComponent(a.sanitizedQuery),
-            this.g.innerHTML = 'Search »';
-            a.showOptionsTip && (this.e.className = "gdx-display-block");
-            document.documentElement.appendChild(this.c);
-            J(this)
+                else that.b.className = "gdx-display-none", that.h.innerHTML = "No definition found.", that.g.href = "http://www.google.com/search?q=" + encodeURIComponent(a.sanitizedQuery),
+                that.g.innerHTML = 'Search »';
+                a.showOptionsTip && (that.e.className = "gdx-display-block");
+                document.documentElement.appendChild(that.c);
+                J(that);
+            });
         }
     };
     var K = function (a, b) {

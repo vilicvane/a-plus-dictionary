@@ -56,17 +56,17 @@
                         var data = H(a);
                         F((data && data.prettyQuery || c).replace(/¡¤/g, ""), function (a) {
                             E(a, "translate", d)
-                        });
+                        }, t.language);
                     }
                 }, {
                     restricts: b
                 });
                 "en" != t.language && google.language.define(c, "en", "en", function (a) {
-                    E(a, "enDict", d)
+                    E(a, "enDict", d);
                     var data = H(a);
                     F((data && data.prettyQuery || c).replace(/¡¤/g, ""), function (a) {
                         E(a, "translate", d)
-                    });
+                    }, d.request.type == "fetch_raw" ? t.language: "");
                 }, {
                     restricts: b
                 });
@@ -85,13 +85,19 @@
                 });
                 return h
             }
-        }, F = function (a, c) {
+        }, F = function (a, c, lang) {
             var b = new XMLHttpRequest;
             b.open("GET", "https://clients5.google.com/translate_a/t?client=dict-chrome-ex&sl=auto&tl=" +
-                t.language + "&q=" + encodeURIComponent(a), h);
+                (lang || t.language) + "&q=" + encodeURIComponent(a), h);
             b.onreadystatechange = function () {
                 if (4 == b.readyState) try {
-                    c(JSON.parse(b.responseText))
+                    var data = JSON.parse(b.responseText);
+                    if (lang || data.src.substr(0, 2) != t.language.substr(0, 2)) {
+                        c(data);
+                    }
+                    else {
+                        F(a, c, "en");
+                    }
                 }
                 catch (a) {
                     c(k)
@@ -171,7 +177,8 @@
                     var limit = 10;
 
                     e = "";
-                    if (c.dict && 0 < c.dict.length) {
+                    
+                    if (c && c.dict && 0 < c.dict.length) {
                         e = '<h3 class="dct-tl">Translated Definitions</h3>';
                         f = 0;
                         for (l = c.dict.length; f < l; f++) {
@@ -307,7 +314,7 @@
                         "") +
                         '<div style="clear: both;"></div>'
                     )) +
-                        (d && d.srcLang != "en" ? '<div class="translate-attrib">' + d.attribution + "</div>" : "");
+                        (d && d.srcLang != "en" && d.srcLang.substr(0, 2) != t.language.substr(0, 2) ? '<div class="translate-attrib">' + d.attribution + "</div>" : "");
 
                     if (!d) {
                         a = "";
