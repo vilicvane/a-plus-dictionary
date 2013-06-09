@@ -19,7 +19,9 @@
                 if (c == a[b]) return true;
             return false;
         }, B = function () {
-            t = JSON.parse(window.localStorage.options)
+            chrome.storage.sync.get("options", function (data) {
+                t = data.options;
+            });
         }, C = function (a,
             c, b) {
             "initialize" == a.type && (a = {
@@ -461,6 +463,7 @@
             var b = function (a, b) {
                 return "true" == a || "false" == a ? a : a == h ? "true" : a == m ? "false" : b
             };
+            c.autoAudio = b(a.autoAudio, "false");
             c.popupDblclick = b(a.popupDblclick, "true");
             c.popupSelect = b(a.popupSelect, "false");
             c.enableHttps = b(a.enableHttps, "true");
@@ -472,14 +475,17 @@
         }, N = N || m;
     if ("undefined" == typeof N || !N) {
         dict_api.load("https://clients5.google.com?client=dict-chrome-ex", "1", "en");
-        var O = window.localStorage.options,
+        var O;
+        chrome.storage.sync.get("options", function (data) {
+            O = data.options || window.localStorage.options
             L = {};
-        O && (L = JSON.parse(O));
-        t = M();
-        window.localStorage.options = JSON.stringify(t);
-        chrome.extension.onMessage.addListener(C);
-        chrome.extension.onMessage.addListener(D);
-        chrome.extension.onMessage.addListener(G);
-        window["gdx.updateOptions"] = B
+            O && (L = typeof O == "string" ? JSON.parse(O) : O);
+            t = M();
+            chrome.storage.sync.set({ options: t });
+            chrome.extension.onMessage.addListener(C);
+            chrome.extension.onMessage.addListener(D);
+            chrome.extension.onMessage.addListener(G);
+            window["gdx.updateOptions"] = B
+        });
     };
 })();

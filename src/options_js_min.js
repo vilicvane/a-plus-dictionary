@@ -1,15 +1,16 @@
 /* Copyright 2011 Google Inc. All Rights Reserved. */
 (function () {
     var d = !1,
-        e, f, g, h, k, l, m, n, p, r = function () {
+        e, f, g, h, k, l, m, n, p, autoAudioCheckbox, r = function () {
             var a = {};
             a.language = g.options[g.selectedIndex].value;
+            a.autoAudio = autoAudioCheckbox.checked ? "true" : "false";
             a.popupDblclick = h.checked ? "true" : "false";
             a.popupSelect = m.checked ? "true" : "false";
             a.popupDblclickKey = l.options[l.selectedIndex].value;
             a.popupSelectKey = p.options[p.selectedIndex].value;
             a.enableHttps = "true";
-            window.localStorage.options = JSON.stringify(a);
+            chrome.storage.sync.set({ options: a });
             var b = document.getElementById("save_status");
             b.style.setProperty("-webkit-transition", "opacity 0s ease-in");
             b.style.opacity = 1;
@@ -22,14 +23,18 @@
             chrome.extension.getBackgroundPage()["gdx.updateOptions"]()
         }, v = function () {
             q(d);
-            var a = JSON.parse(window.localStorage.options);
-            s(g, a.language);
-            h.checked = "true" == a.popupDblclick;
-            t();
-            m.checked = "true" == a.popupSelect;
-            u();
-            s(l, a.popupDblclickKey);
-            s(p, a.popupSelectKey)
+            chrome.storage.sync.get("options", function (data) {
+                var a = data.options || JSON.parse(window.localStorage.options);
+
+                s(g, a.language);
+                h.checked = "true" == a.popupDblclick;
+                t();
+                m.checked = "true" == a.popupSelect;
+                u();
+                autoAudioCheckbox.checked = "true" == a.autoAudio;
+                s(l, a.popupDblclickKey);
+                s(p, a.popupSelectKey)
+            });
         }, s = function (a, b) {
             for (var c = 0, x = a.options.length; c < x; c++)
                 if (a.options[c].value == b) {
@@ -55,6 +60,7 @@
         e = document.getElementById("save_button");
         f = document.getElementById("reset_button");
         g = document.getElementById("language_selector");
+        autoAudioCheckbox = document.getElementById("auto_audio_checkbox")
         h = document.getElementById("popup_dblclick_checkbox");
         k = document.getElementById("popup_dblclick_text");
         l = document.getElementById("popup_dblclick_key");

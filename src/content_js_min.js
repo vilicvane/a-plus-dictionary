@@ -184,6 +184,7 @@
         a.a.style.left = p + "px"
     };
     D.prototype.L = function (a) {
+        var that = this;
         if (a.eventKey == this.m) {
             this.f();
             this.l.className = "gdx-display-none";
@@ -196,7 +197,16 @@
                 this.b.className = "gdx-display-block";
                 this.q.innerHTML = b.prettyQuery;
                 this.h.innerHTML = b.meaningText;
-                b.audio && (this.p.src = b.audio, this.l.className = "gdx-display-block");
+                if (b.audio) {
+                    this.p.src = b.audio;
+                    this.l.className = "gdx-display-block";
+
+                    chrome.storage.sync.get("options", function (data) {
+                        if (data.options.autoAudio == "true") {
+                            that.p.play();
+                        }
+                    });
+                }
                 this.g.href = b.moreUrl;
                 this.g.innerHTML = "More »";
                 b.attribution && ("translation" == b.type ? (this.o.innerHTML =

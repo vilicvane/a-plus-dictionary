@@ -44,6 +44,11 @@
 
                     if (audioBt) {
                         audio.src = audioBt.getAttribute("data-audio");
+                        chrome.storage.sync.get("options", function (data) {
+                            if (data.options.autoAudio == "true") {
+                                audio.play();
+                            }
+                        });
                         audioBt.onclick = function () {
                             audio.play();
                         };
