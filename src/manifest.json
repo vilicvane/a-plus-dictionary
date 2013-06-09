@@ -6,7 +6,7 @@
    "browser_action": {
       "default_icon": "static/icon19.png",
       "default_popup": "page_action.html",
-      "default_title": "Google Dictionary Plus"
+      "default_title": "A+ Dictionary"
    },
    "content_scripts": [ {
       "all_frames": true,
@@ -15,7 +15,7 @@
       "matches": [ "<all_urls>" ]
    } ],
    "content_security_policy": "script-src 'self' https://ssl.google-analytics.com https://clients5.google.com; object-src 'self'",
-   "description": "View definitions easily as you browse the web. Based on Google Dictionary by Google.",
+   "description": "View definitions in both your language and English as you browse the web. Based on Google Dictionary by Google.",
    "icons": {
       "128": "static/icon128.png",
       "16": "static/icon16.png",
@@ -23,9 +23,8 @@
       "48": "static/icon48.png"
    },
    "manifest_version": 2,
-   "name": "Google Dictionary Plus",
+   "name": "A+ Dictionary",
    "options_page": "options.html",
    "permissions": [ "tabs", "storage", "https://clients5.google.com/*" ],
-   "version": "0.2.16",
-   "update_url": "https://raw.github.com/vilic/google-dictionary-plus/master/update.xml"
+   "version": "0.2.17"
 }

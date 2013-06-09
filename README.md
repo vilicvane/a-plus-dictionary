@@ -1,13 +1,9 @@
-# Google Dictionary Plus
-based on Google Dictionary (by Google)
+# A+ Dictionary
+Based on Google Dictionary (by Google)
 
-## How to Install
+## Install
 
-Chrome now limits the installation of extensions not from their store, which is sad.
-
-After downloading the crx file, open your extensions page. (You can find this page through Chrome menu > Tools > Extensions, or simply enter "chrome://extensions" as address.)
-
-Then, drag this file from your downloads bar (at the bottom of the page) to the extensions page to finish installation. If you missed that bar, please open your native file explorer and drag the file there to the extensions page.
+View it on [Chrome Web Store](https://chrome.google.com/webstore/detail/a%20-dictionary/nbdnlnijofenjgknplpelkpmhikpangb)
 
 ## Why Plus
 
@@ -16,7 +12,7 @@ I personalized Google Dictionary because:
 1. It was not good looking enough.
 2. I would like it to show the meaning in both my language and English.
 
-## Plus v.s. Official
+## A+ Dictionary v.s. Official Google Dictionary
 
 ![Selection](https://raw.github.com/vilic/google-dictionary-plus/master/screenshots/vs.png)
 

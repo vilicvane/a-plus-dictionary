@@ -70,7 +70,7 @@
     e.addEventListener("keydown", function (a) {
         13 == a.keyCode && q()
     }, !1);
-    k.innerHTML = "Tip: Select text on any webpage, then click the Google Dictionary button to view the definition of your selection.";
+    k.innerHTML = "Tip: Select text on any webpage, then click the A+ Dictionary button to view the definition of your selection.";
     k.style.display = "block";
     chrome.tabs.getSelected(b, function (a) {
         chrome.tabs.sendMessage(a.id,
