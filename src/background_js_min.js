@@ -338,8 +338,9 @@
                 }
                 else {
                     g = k;
-                    e ? (g = e, g.moreUrl = a, d && (d.audio && "en" == e.srcLang.toLowerCase()) && (g.audio = d.audio)) : c ? (g = c, g.moreUrl = f) : t.language != "en" && (g = d, g.moreUrl = f);
-
+                    try {
+                        e ? (g = e, g.moreUrl = a, d && (d.audio && "en" == e.srcLang.toLowerCase()) && (g.audio = d.audio)) : c ? (g = c, g.moreUrl = f) : t.language != "en" && d && (g = d, g.moreUrl = f);
+                    } catch (e) { alert(e) }
                     if (g) {
                         if (!g.prettyQuery) {
                             g.prettyQuery = query;
