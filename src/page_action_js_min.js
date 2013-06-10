@@ -18,7 +18,7 @@
             }, !1)
         }, q = function () {
             var a;
-            if (a = e.value.replace(/^\s+|\s+$/g, "")) f.innerHTML = "Searching...", f.style.display = "block", h.style.display = "none", k.style.display = "none", l.style.display = "none", d.disabled = !0, c++, chrome.extension.sendMessage(
+            if (a = e.value.replace(/^\s+|\s+$/g, "")) e.blur(), f.innerHTML = "Searching...", f.style.display = "block", h.style.display = "none", k.style.display = "none", l.style.display = "none", d.disabled = !0, c++, chrome.extension.sendMessage(
                 {
                     type: "fetch_html",
                     eventKey: c,
@@ -60,6 +60,37 @@
         }, d = document.getElementById("button"),
         e = document.getElementById("query-field");
     e.focus();
+
+    e.addEventListener("mousedown", function (ev) {
+        if (document.activeElement != e) {
+            ev.preventDefault();
+            e.focus();
+        }
+    });
+
+    e.addEventListener("focus", function (ev) {
+        e.select();
+    });
+
+    document.addEventListener("keydown", function (ev) {
+        if (document.activeElement == e) {
+            return;
+        }
+
+        if (ev.keyCode == 13 && document.activeElement != d) {
+            //e.value = "";
+            e.focus();
+        }
+        else if (ev.keyCode == 8) {
+            e.focus();
+            var l = e.value.length;
+            e.setSelectionRange(l, l);
+        }
+        else if (ev.keyCode != 13) {
+            e.focus();
+        }
+    }, true);
+
     f = document.getElementById("lookup-status");
     h = document.getElementById("web-search-link");
     m(h);
@@ -69,7 +100,7 @@
     d.addEventListener("click", q, !1);
     e.addEventListener("keydown", function (a) {
         13 == a.keyCode && q()
-    }, !1);
+    }, true);
     k.innerHTML = "Tip: Select text on any webpage, then click the A+ Dictionary button to view the definition of your selection.";
     k.style.display = "block";
     chrome.tabs.getSelected(b, function (a) {
