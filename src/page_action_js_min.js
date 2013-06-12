@@ -86,7 +86,7 @@
             var l = e.value.length;
             e.setSelectionRange(l, l);
         }
-        else if (ev.keyCode != 13) {
+        else if (!ev.ctrlKey && !ev.metaKey) {
             e.focus();
         }
     }, true);
