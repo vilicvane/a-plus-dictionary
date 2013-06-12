@@ -22,9 +22,18 @@
       "32": "static/icon32.png",
       "48": "static/icon48.png"
    },
+   "commands": {
+      "_execute_browser_action": {
+         "suggested_key": {
+            "default": "Ctrl+Shift+A",
+            "mac": "MacCtrl+Shift+A"
+         },
+         "description": "Open popup pages."
+      }
+   },
    "manifest_version": 2,
    "name": "A+ Dictionary",
    "options_page": "options.html",
    "permissions": [ "tabs", "storage", "https://clients5.google.com/*" ],
-   "version": "0.2.22"
+   "version": "0.2.23"
 }
