@@ -35,5 +35,5 @@
    "name": "A+ Dictionary",
    "options_page": "options.html",
    "permissions": [ "tabs", "storage", "https://clients5.google.com/*" ],
-   "version": "0.2.23"
+   "version": "0.2.24"
 }

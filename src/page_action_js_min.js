@@ -56,6 +56,7 @@
                 }
                 else f.innerHTML = "No definition found.", f.style.display = "block", h.href = "http://www.google.com/search?q=" + a.sanitizedQuery, h.innerHTML = 'Search the web for "' + a.sanitizedQuery + '" »', h.style.display = "block";
                 d.disabled = !1
+                l.scrollTop = 0;
             }
         }, d = document.getElementById("button"),
         e = document.getElementById("query-field");
