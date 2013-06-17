@@ -54,7 +54,7 @@
                     E(a, "dict", d);
                     if ("en" == t.language) {
                         var data = H(a);
-                        F((data && data.prettyQuery || c).replace(/¡¤/g, ""), function (a) {
+                        F((data && data.prettyQuery || c).replace(/Â·/g, ""), function (a) {
                             E(a, "translate", d)
                         }, t.language);
                     }
@@ -64,7 +64,7 @@
                 "en" != t.language && google.language.define(c, "en", "en", function (a) {
                     E(a, "enDict", d);
                     var data = H(a);
-                    F((data && data.prettyQuery || c).replace(/¡¤/g, ""), function (a) {
+                    F((data && data.prettyQuery || c).replace(/Â·/g, ""), function (a) {
                         E(a, "translate", d)
                     }, d.request.type == "fetch_raw" ? t.language: "");
                 }, {
@@ -177,7 +177,7 @@
                     var limit = 10;
 
                     e = "";
-                    
+
                     if (c && c.dict && 0 < c.dict.length) {
                         e = '<h3 class="dct-tl">Translated Definitions</h3>';
                         f = 0;
@@ -392,7 +392,7 @@
             return ""
         }, K = function (a) {
             if (!a || 0 == a.length) return k;
-            
+
             var pOSMap = {};
             var pOSNumber = 0;
             var pOSs = [];
