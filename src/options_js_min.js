@@ -1,4 +1,4 @@
-/* Copyright 2011 Google Inc. All Rights Reserved. */
+﻿/* Copyright 2011 Google Inc. All Rights Reserved. */
 (function () {
     var d = !1,
         e, f, g, h, k, l, m, n, p, autoAudioCheckbox, r = function () {

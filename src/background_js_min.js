@@ -1,4 +1,4 @@
-/* Copyright 2011 Google Inc. All Rights Reserved. */
+﻿/* Copyright 2011 Google Inc. All Rights Reserved. */
 (function () {
     var h = !0,
         k = null,
@@ -54,7 +54,7 @@
                     E(a, "dict", d);
                     if ("en" == t.language) {
                         var data = H(a);
-                        F((data && data.prettyQuery || c).replace(/·/g, ""), function (a) {
+                        F((data && data.prettyQuery || c).replace(/\xb7/g, ""), function (a) {
                             E(a, "translate", d)
                         }, t.language);
                     }
@@ -64,7 +64,7 @@
                 "en" != t.language && google.language.define(c, "en", "en", function (a) {
                     E(a, "enDict", d);
                     var data = H(a);
-                    F((data && data.prettyQuery || c).replace(/·/g, ""), function (a) {
+                    F((data && data.prettyQuery || c).replace(/\xb7/g, ""), function (a) {
                         E(a, "translate", d)
                     }, d.request.type == "fetch_raw" ? t.language: "");
                 }, {

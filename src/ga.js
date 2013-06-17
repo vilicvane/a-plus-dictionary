@@ -1,4 +1,4 @@
-var _gaq = _gaq || [];
+﻿var _gaq = _gaq || [];
 _gaq.push(['_setAccount', 'UA-41570387-1']);
 _gaq.push(['_trackPageview']);
 
