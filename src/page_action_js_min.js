@@ -87,7 +87,7 @@
             var l = e.value.length;
             e.setSelectionRange(l, l);
         }
-        else if (!ev.ctrlKey && !ev.metaKey || ev.keyCode == 86) {
+        else if (!ev.altKey && !ev.ctrlKey && !ev.metaKey || ev.keyCode == 86) {
             e.focus();
         }
     }, true);
