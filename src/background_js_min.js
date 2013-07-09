@@ -469,7 +469,7 @@
                         firstVowel = true;
                     }
                     else if (/ə/.test(chr)) {
-                        if (firstVowel && !/[ˈˌ]/.test(pChars[i + 1])) {
+                        if (firstVowel && !/r?[ˈˌ\/]/.test(phonetic.substr(i + 1))) {
                             firstVowel = false;
                             pChars[i] = "ʌ";
                         }
