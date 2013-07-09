@@ -421,11 +421,67 @@
                 }
             }
 
+            var phoneticTable = {
+                "o͝o": "ʊ",
+                "o͞o": "uː",
+                "ou": "aʊ",
+                "en": "ɪn",
+                "o": "ɔ",
+                "ō": "oʊ",
+                "ô": "ɔː",
+                "i": "ɪ",
+                "ī": "aɪ",
+                "j": "dʒ",
+                "y": "j",
+                "a": "æ",
+                "ä": "ɑː",
+                "ā": "eɪ",
+                "e": "ɛ",
+                "ē": "i",
+                //"ə": "ʌ",
+                //"ər": "ɜːr",
+                "TH": "θ",
+                "T͟H": "ð",
+                "NG": "ŋ",
+                "SH": "ʃ",
+                "CH": "tʃ",
+                "ZH": "ʒ"
+            };
+
             for (var c = 0, b; b = a[c]; c++) {
+                var phonetic =
+                    (J(b.terms, "phonetic") || "")
+                        .replace(/\([^\)]+\)/g, "")
+                        .replace(/o͝o|o͞o|ou|en|TH|T͟H|NG|SH|CH|ZH|./g, function (m) {
+                            return phoneticTable[m] || m;
+                        })
+                        .replace(/ər(?![ˈˌ\/])/g, "ɜːr");
+
+                var firstVowel = true;
+                var pChars = phonetic.split("");
+
+                for (var i = 0; i < pChars.length; i++) {
+                    var chr = pChars[i];
+                    if (/[aiɪoɔʊuæɑeʌɛ]/.test(chr)) {
+                        firstVowel = false;
+                    }
+                    else if (/[ˈˌ]/.test(chr)) {
+                        firstVowel = true;
+                    }
+                    else if (/ə/.test(chr)) {
+                        if (firstVowel && !/[ˈˌ]/.test(pChars[i + 1])) {
+                            firstVowel = false;
+                            pChars[i] = "ʌ";
+                        }
+                    }
+                }
+
+                phonetic = pChars.join("");
+
                 var o = {
                     prettyQuery: J(b.terms, "text"),
                     audio: J(b.terms, "sound").replace("http://", "https://"),
-                    phonetic: J(b.terms, "phonetic")
+                    phonetic: phonetic
                 };
 
                 //var phonetic;
