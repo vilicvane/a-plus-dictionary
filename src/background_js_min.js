@@ -455,9 +455,9 @@
                         .replace(/o͝o|o͞o|ou|en|TH|T͟H|NG|SH|CH|ZH|./g, function (m) {
                             return phoneticTable[m] || m;
                         })
-                        .replace(/ər(?![ˈˌ\/])/g, "ɜːr");
+                        //.replace(/ər(?![ˈˌ\/])/g, "ɜːr");
 
-                var firstVowel = true;
+                var firstVowel = !/\/[^ˈˌ]+[ˈˌ]/.test(phonetic);
                 var pChars = phonetic.split("");
 
                 for (var i = 0; i < pChars.length; i++) {
@@ -469,9 +469,14 @@
                         firstVowel = true;
                     }
                     else if (/ə/.test(chr)) {
-                        if (firstVowel && !/r?[ˈˌ\/]/.test(phonetic.substr(i + 1))) {
+                        if (firstVowel) {
                             firstVowel = false;
-                            pChars[i] = "ʌ";
+                            if (pChars[i + 1] == "r") {
+                                pChars[i] = "ɜː"
+                            }
+                            else if (!/[ˈˌ]/.test(pChars[i + 1])) {
+                                pChars[i] = "ʌ";
+                            }
                         }
                     }
                 }
