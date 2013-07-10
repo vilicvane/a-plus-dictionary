@@ -452,7 +452,7 @@
                 var phonetic =
                     (J(b.terms, "phonetic") || "")
                         .replace(/\([^\)]+\)/g, "")
-                        .replace(/o͝o|o͞o|ou|en|TH|T͟H|NG|SH|CH|ZH|./g, function (m) {
+                        .replace(/o͝o|o͞o|ou|en(?=[ˈˌ])|TH|T͟H|NG|SH|CH|ZH|./g, function (m) {
                             return phoneticTable[m] || m;
                         })
                         //.replace(/ər(?![ˈˌ\/])/g, "ɜːr");
