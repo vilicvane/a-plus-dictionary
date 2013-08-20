@@ -28,7 +28,8 @@ input {
 input[type=button] {
     background-color: #58d;
     color: rgba(255,255,255,0.9); font-weight: normal;
-    padding: 2px 0px; line-height: 20px;
+    padding: 2px 0px; margin: 2px auto;
+    line-height: 20px;
     border: solid 2px #58d;
     cursor: pointer;
     transition: linear 0.2s;
@@ -51,8 +52,9 @@ input[type=button]:enabled:hover {
 #query-field {
     position: absolute;
     left: 0px;
-    width: 240px;
-    line-height: 18px; padding: 4px;
+    width: 240px; height: 18px;
+    line-height: 18px;
+    padding: 4px; margin: 2px auto;
     border: solid 1px #eee;
     outline: none;
     transition: border-color linear 0.2s;

@@ -164,8 +164,9 @@
                 !c && !e && (a = "none");
                 //_gaq && _gaq.push(["_trackEvent", "lookup", "type_" + a]);
 
-                a = "http://translate.google.com/translate_t?source=dict-chrome-ex&sl=auto&tl=" + t.language + "&q=" + encodeURIComponent(b.sanitizedQuery);
-                f = "http://www.google.com/search?source=dict-chrome-ex&defl=" + t.language + "&hl=" + t.language + "&q=" + encodeURIComponent(b.sanitizedQuery) + "&tbo=1&tbs=dfn:1";
+                // a = "http://translate.google.com/translate_t?source=dict-chrome-ex&sl=auto&tl=" + t.language + "&q=" + encodeURIComponent(b.sanitizedQuery);
+                a = "https://translate.google.com/translate_t?source=dict-chrome-ex&sl=auto&tl=" + t.language + "&q=" + encodeURIComponent(b.sanitizedQuery);
+                f = "https://www.google.com/search?source=dict-chrome-ex&defl=" + t.language + "&hl=" + t.language + "&q=" + encodeURIComponent(b.sanitizedQuery) + "&tbo=1&tbs=dfn:1";
 
                 var dObj = d;
 
