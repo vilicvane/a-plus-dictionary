@@ -177,10 +177,12 @@
 
                     var limit = 10;
 
-                    e = "";
+                    var dR = t.language == "en" ? b.dictResponse : b.enDictResponse;
+
+                    e = getRelatedLabelsHtml();
 
                     if (c && c.dict && 0 < c.dict.length) {
-                        e = '<h3 class="dct-tl">Translated Definitions</h3>';
+                        e += '<h3 class="dct-tl">Translated Definitions</h3>';
                         f = 0;
                         for (l = c.dict.length; f < l; f++) {
                             for (var g = c.dict[f], e = e + (g.pos ? "<b>" + g.pos + "</b>" : "") + "<ol>",
@@ -192,16 +194,15 @@
                         }
                     }
                     else if (d) {
-                        e = '<h3 class="dct-tl">Translated Definitions</h3>' + d.meaningText;
+                        e += '<h3 class="dct-tl">Translated Definitions</h3>' + d.meaningText;
                     }
-
-                    var dR = t.language == "en" ? b.dictResponse : b.enDictResponse;
 
                     //if (!dR.primaries && !dR.webDefinitions) {
                     //    dR = b.dictResponse;
                     //}
 
                     var html = getDefinitionHtml("primaries", limit);
+                    var synonymsHtml = getSynonymsHtml();
 
                     dR = b.dictResponse;
 
@@ -301,6 +302,91 @@
                         return html;
                     }
 
+                    function getRelatedLabelsHtml() {
+                        var html = "";
+
+                        if (!dR || !dR.primaries) {
+                            return html;
+                        }
+
+                        var primaries = dR.primaries;
+                        html += '<ul class="related-list">';
+
+                        var hash = {};
+                        var items = [];
+
+                        for (var i = 0; i < primaries.length; i++) {
+                            var entries = primaries[i].entries;
+                            for (var j = 0; j < entries.length; j++) {
+                                var entry = entries[j];
+                                if (entry.type == "related") {
+                                    var terms = entry.terms;
+                                    for (var k = 0; k < terms.length; k++) {
+                                        var term = terms[k];
+
+                                        var labelStrs;
+                                        if (hash.hasOwnProperty(term.text)) {
+                                            labelStrs = hash[term.text].labels;
+                                        }
+                                        else {
+                                            labelStrs = (hash[term.text] = { text: term.text, labels: [], toString: toString }).labels;
+                                            items.push(hash[term.text]);
+                                        }
+
+                                        var labels = term.labels;
+                                        for (var l = 0; l < labels.length; l++) {
+                                            labelStrs.push(labels[l].text);
+                                        }
+                                    }
+
+                                    break;
+                                }
+                            }
+                        }
+
+                        html += items.join("");
+                        html += "</ul>";
+
+                        return html;
+
+                        function toString() {
+                            return '<li title="' + this.labels.join(", ") + '">' + this.text + '</li>';
+                        }
+                    }
+
+                    function getSynonymsHtml() {
+                        var html = "";
+
+                        if (!dR || !dR.synonyms) {
+                            return html;
+                        }
+
+                        var synonyms = dR.synonyms;
+
+
+                        for (var i = 0; i < synonyms.length; i++) {
+                            var entries = synonyms[i].entries;
+                            for (var j = 0; j < entries.length; j++) {
+                                var entry = entries[j];
+                                if (entry.type == "related") {
+                                    html += '<li><ul class="related-list">';
+
+                                    var terms = entry.terms;
+                                    var termStrs = [];
+
+                                    for (var k = 0; k < terms.length; k++) {
+                                        termStrs.push("<li>" + terms[k].text + "</li>");
+                                    }
+
+                                    html += termStrs.join("");
+                                    html += "</ul></li>";
+                                }
+                            }
+                        }
+
+                        return html ? "<ol>" + html + "</ol>" : "";
+                    }
+
                     var noDf = !(html || webHtml || e);
 
                     d = (noDf ? (
@@ -326,6 +412,9 @@
                         }
                         if (webHtml) {
                             e += '<h3 class="dct-tl">Web Definitions</h3>' + webHtml;
+                        }
+                        if (synonymsHtml) {
+                            e += '<h3 class="dct-tl">Synonyms</h3>' + synonymsHtml;
                         }
 
                         a = d + e;
