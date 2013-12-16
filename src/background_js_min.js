@@ -66,7 +66,7 @@
                     var data = H(a);
                     F((data && data.prettyQuery || c).replace(/\xb7/g, ""), function (a) {
                         E(a, "translate", d)
-                    }, d.request.type == "fetch_raw" ? t.language: "");
+                    }, d.request.type == "fetch_raw" ? t.language : "");
                 }, {
                     restricts: b
                 });
@@ -99,9 +99,9 @@
                         F(a, c, "en");
                     }
                 }
-                catch (a) {
-                    c(k)
-                }
+                    catch (a) {
+                        c(k)
+                    }
             };
             b.send()
         }, E = function (a, c, b) {
@@ -124,8 +124,8 @@
 
                 var preMT = "";
                 if (d) {
-                    if (d.phonetic) {
-                        preMT += '<span class="gdx-bubble-phonetic">' + d.phonetic + "</span>";
+                    if (d.phonetics && d.phonetics.length) {
+                        preMT += '<span class="gdx-bubble-phonetic">' + d.phonetics[0].text + "</span>";
                     }
                     if (d.partOfSpeech) {
                         preMT += '<span class="gdx-bubble-part-of-speech">' + d.partOfSpeech + "</span>";
@@ -180,6 +180,10 @@
                     var dR = t.language == "en" ? b.dictResponse : b.enDictResponse;
 
                     e = getRelatedLabelsHtml();
+                    var html = getDefinitionHtml("primaries", limit);
+                    var synonymsHtml = getSynonymsHtml();
+
+                    e += (synonymsHtml ? '<h4 class="dct-tl">Synonyms</h4>' + synonymsHtml : "");
 
                     if (c && c.dict && 0 < c.dict.length) {
                         e += '<h3 class="dct-tl">Translated Definitions</h3>';
@@ -201,8 +205,6 @@
                     //    dR = b.dictResponse;
                     //}
 
-                    var html = getDefinitionHtml("primaries", limit);
-                    var synonymsHtml = getSynonymsHtml();
 
                     dR = b.dictResponse;
 
@@ -310,7 +312,6 @@
                         }
 
                         var primaries = dR.primaries;
-                        html += '<ul class="related-list">';
 
                         var hash = {};
                         var items = [];
@@ -344,8 +345,10 @@
                             }
                         }
 
-                        html += items.join("");
-                        html += "</ul>";
+                        html = items.join("");
+                        if (html) {
+                            html = '<ul class="related-list">' + html + "</ul>";
+                        }
 
                         return html;
 
@@ -369,7 +372,11 @@
                             for (var j = 0; j < entries.length; j++) {
                                 var entry = entries[j];
                                 if (entry.type == "related") {
-                                    html += '<li><ul class="related-list">';
+                                    html += '<li>';
+                                    var pos = entry.labels[0].text;
+
+                                    html += pos + ".";
+                                    html += '<ul class="related-list">';
 
                                     var terms = entry.terms;
                                     var termStrs = [];
@@ -384,7 +391,7 @@
                             }
                         }
 
-                        return html ? "<ol>" + html + "</ol>" : "";
+                        return html ? '<ol class="synonyms-list">' + html + "</ol>" : "";
                     }
 
                     var noDf = !(html || webHtml || e);
@@ -394,10 +401,31 @@
                         '<div class="translate-main">' + d.meaningText + '</div>' :
                         ""
                     ) : (
-                        '<div class="translate-main">' + query + '</div>' +
+                        '<div class="translate-main">' +
+                            query +
+                            (dObj && dObj.audio && dObj.phonetics.length > 1 ? '<span class="translate-audio" data-audio="' + dObj.audio + '"></span>' : "") +
+                        '</div>' +
                         (dObj ?
-                        '<span class="translate-phonetic">' + (dObj.phonetic || "") + '</span>' +
-                        (dObj.phonetic && dObj.audio ? '<span class="translate-audio" data-audio="' + dObj.audio + '"></span>' : "") :
+                        (function (phonetics) {
+                            if (phonetics.length) {
+                                if (phonetics.length == 1) {
+                                    return (
+                                        '<span class="translate-phonetic">' + phonetics[0].text + '</span>' +
+                                        '<span class="translate-audio" data-audio="' + dObj.audio + '"></span>'
+                                    );
+                                }
+                                else {
+                                    var strs = [];
+                                    for (var i = 0; i < phonetics.length; i++) {
+                                        strs.push('<span class="translate-phonetic" title="' + phonetics[i].poss.join(", ").toLowerCase() + '">' + phonetics[i].text + '</span>');
+                                    }
+                                    return strs.join('<span class="translate-phonetic-sep">·</span>');
+                                }
+                            }
+                            else {
+                                return "";
+                            }
+                        })(dObj.phonetics) :
                         "") +
                         '<div style="clear: both;"></div>'
                     )) +
@@ -412,9 +440,6 @@
                         }
                         if (webHtml) {
                             e += '<h3 class="dct-tl">Web Definitions</h3>' + webHtml;
-                        }
-                        if (synonymsHtml) {
-                            e += '<h3 class="dct-tl">Synonyms</h3>' + synonymsHtml;
                         }
 
                         a = d + e;
@@ -538,14 +563,14 @@
                 "ZH": "ʒ"
             };
 
-            for (var c = 0, b; b = a[c]; c++) {
-                var phonetic =
-                    (J(b.terms, "phonetic") || "")
+            function convertPhonetic(phonetic) {
+                phonetic =
+                    (phonetic || "")
                         .replace(/\([^\)]+\)/g, "")
                         .replace(/o͝o|o͞o|ou|en(?=[ˈˌ])|TH|T͟H|NG|SH|CH|ZH|./g, function (m) {
                             return phoneticTable[m] || m;
                         })
-                        //.replace(/ər(?![ˈˌ\/])/g, "ɜːr");
+                //.replace(/ər(?![ˈˌ\/])/g, "ɜːr");
 
                 var firstVowel = !/\/[^ˈˌ]+[ˈˌ]/.test(phonetic);
                 var pChars = phonetic.split("");
@@ -573,10 +598,51 @@
 
                 phonetic = pChars.join("");
 
+                return phonetic;
+            }
+
+            function getPhonetics(items) {
+                var data = [];
+                var hash = {};
+                var hasOwnProperty = Object.prototype.hasOwnProperty;
+                for (var i = 0; i < items.length; i++) {
+                    var terms = items[i].terms;
+                    var label;
+                    for (var j = 0; j < terms.length; j++) {
+                        var term = terms[j];
+
+                        if (term.type == "text" && term.labels) {
+                            label = term.labels[0].text.toLowerCase();
+                        }
+                        else if (term.type == "phonetic") {
+                            var phonetic;
+                            var text = convertPhonetic(term.text);
+                            if (!hasOwnProperty.call(hash, text)) {
+                                phonetic = hash[text] = {
+                                    text: text,
+                                    poss: [label]
+                                };
+                                data.push(phonetic);
+                            }
+                            else {
+                                phonetic = hash[text];
+                                phonetic.poss.push(label);
+                            }
+                            break;
+                        }
+                    }
+                }
+
+                return data;
+            }
+
+            var phonetics = getPhonetics(a);
+
+            for (var c = 0, b; b = a[c]; c++) {
                 var o = {
                     prettyQuery: J(b.terms, "text"),
-                    audio: J(b.terms, "sound").replace("http://", "https://"),
-                    phonetic: phonetic
+                    audio: J(b.terms, "sound").replace(/^http:/, "https:"),
+                    phonetics: phonetics
                 };
 
                 //var phonetic;
